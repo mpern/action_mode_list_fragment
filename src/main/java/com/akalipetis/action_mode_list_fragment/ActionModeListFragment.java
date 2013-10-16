@@ -146,6 +146,8 @@ public abstract class ActionModeListFragment extends ListFragment implements Ada
         public void onDestroyActionMode(ActionMode mode) {
             if (mListener != null) mListener.onDestroyActionMode(mWrapper);
             ListView list = getListView();
+            list.clearChoices();
+            list.requestLayout();
             list.post(restoreList);
         }
     }
