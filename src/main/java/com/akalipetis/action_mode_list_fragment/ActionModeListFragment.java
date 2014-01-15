@@ -25,6 +25,7 @@
 package com.akalipetis.action_mode_list_fragment;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -61,11 +62,15 @@ public abstract class ActionModeListFragment extends ListFragment implements Ada
     }
 
     @Override
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ListView list = getListView();
         list.setOnItemLongClickListener(this);
-        if (Build.VERSION.SDK_INT >= 11) list.setMultiChoiceModeListener(new InternalV11Listener());
+
+        if (Build.VERSION.SDK_INT >= 11) {
+            list.setMultiChoiceModeListener(new InternalV11Listener());
+        }
     }
 
     @Override
@@ -102,6 +107,7 @@ public abstract class ActionModeListFragment extends ListFragment implements Ada
         return true;
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public int calculateCheckedItems() {
         ListView l = getListView();
         if (Build.VERSION.SDK_INT >= 11) return l.getCheckedItemCount();
